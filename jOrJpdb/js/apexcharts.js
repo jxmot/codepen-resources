@@ -9978,7 +9978,10 @@
     }, {
       key: "exportToSVG",
       value: function exportToSVG() {
-        this.triggerDownload(this.svgUrl(), null, '.svg');
+// jxmot - can optionally use filename from config
+        this.triggerDownload(this.svgUrl(), 
+                             (this.w.config.chart.toolbar.export.svg.filename === undefined ? null : this.w.config.chart.toolbar.export.svg.filename), 
+                             '.svg');
       }
     }, {
       key: "exportToPng",
@@ -9992,7 +9995,10 @@
           if (blob) {
             navigator.msSaveOrOpenBlob(blob, _this2.w.globals.chartID + '.png');
           } else {
-            _this2.triggerDownload(imgURI, null, '.png');
+// jxmot - can optionally use filename from config
+            _this2.triggerDownload(imgURI, 
+                                   (_this2.w.config.chart.toolbar.export.png.filename === undefined ? null : _this2.w.config.chart.toolbar.export.png.filename),
+                                   '.png');
           }
         });
       }
