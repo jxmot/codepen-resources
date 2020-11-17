@@ -3172,7 +3172,9 @@
                 zoomout: true,
                 pan: true,
                 reset: true,
-                customIcons: []
+                customIcons: [],
+// jxmot - menu title
+                menutitle: undefined
               },
               export: {
                 csv: {
@@ -14713,22 +14715,23 @@
         if (this.t.download) {
 // jxmot - determine if the hamburger menu will be empty, if
 // it will be then don't add it.
-          if(typeof this.w.config.chart.toolbar.tools.download === 'object') {
-            if( (!this.w.config.chart.toolbar.tools.download[0]) &&
-                (!this.w.config.chart.toolbar.tools.download[1]) && 
-                (this.w.globals.allSeriesHasEqualX && this.w.config.chart.toolbar.tools.download[2]) ) {
-                  toolbarControls.push({
-                    el: this.elMenuIcon,
-                    icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
-                    title: this.localeValues.menu,
-                    class: 'apexcharts-menu-icon'
-                  });
+          if(typeof this.t.download === 'object') {
+            if(this.t.download[0] || this.t.download[1] || 
+              (this.w.globals.allSeriesHasEqualX && this.t.download[2])) {
+                 toolbarControls.push({
+                   el: this.elMenuIcon,
+                   icon: icoMenu,
+// jxmot - custom hamburger menu title
+                   title: (this.t.menutitle === undefined ? this.localeValues.menu : this.t.menutitle),
+                   class: 'apexcharts-menu-icon'
+                 });
             }
           } else {
             toolbarControls.push({
               el: this.elMenuIcon,
               icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
-              title: this.localeValues.menu,
+// jxmot - custom hamburger menu title
+              title: (this.t.menutitle === undefined ? this.localeValues.menu : this.t.menutitle),
               class: 'apexcharts-menu-icon'
             });
           }
