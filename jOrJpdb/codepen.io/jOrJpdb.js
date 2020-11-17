@@ -950,7 +950,8 @@ var chartOptions = {
                     // change the column name from the default
                     // of "category".
                     headerCategory: 'Date/Time',
-                    // the default Apex date formatting is wrong,
+                    // the default Apex date formatting assumes 
+                    // that the X-axis indements the day only,
                     // it's only useful for X values that don't 
                     // require the time.
                     dateFormatter: function dateFormatter(timestamp) {
