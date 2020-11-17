@@ -14711,12 +14711,27 @@
         appendZoomControl('reset', this.elZoomReset, icoReset);
 
         if (this.t.download) {
-          toolbarControls.push({
-            el: this.elMenuIcon,
-            icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
-            title: this.localeValues.menu,
-            class: 'apexcharts-menu-icon'
-          });
+// jxmot - determine if the hamburger menu will be empty, if
+// it will be then don't add it.
+          if(typeof this.w.config.chart.toolbar.tools.download === 'object') {
+            if( (!this.w.config.chart.toolbar.tools.download[0]) &&
+                (!this.w.config.chart.toolbar.tools.download[1]) && 
+                (this.w.globals.allSeriesHasEqualX && this.w.config.chart.toolbar.tools.download[2]) ) {
+                  toolbarControls.push({
+                    el: this.elMenuIcon,
+                    icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
+                    title: this.localeValues.menu,
+                    class: 'apexcharts-menu-icon'
+                  });
+            }
+          } else {
+            toolbarControls.push({
+              el: this.elMenuIcon,
+              icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
+              title: this.localeValues.menu,
+              class: 'apexcharts-menu-icon'
+            });
+          }
         }
 
         for (var _i = 0; _i < this.elCustomIcons.length; _i++) {
@@ -14764,20 +14779,28 @@
         Graphics.setAttrs(this.elMenu, {
           class: 'apexcharts-menu'
         });
-        var menuItems = [{
-          name: 'exportSVG',
-          title: this.localeValues.exportToSVG
-        }, {
-          name: 'exportPNG',
-          title: this.localeValues.exportToPNG
-        }, {
-          name: 'exportCSV',
-          title: this.localeValues.exportToCSV
-        }];
 
-        if (!this.w.globals.allSeriesHasEqualX) {
-          // if it is a multi series, and all series have variable x values, export CSV won't work
-          menuItems.splice(2, 1);
+// jxmot - handle the possibility that individual
+// download types (SVG,PNG,CSV) can be enabled/disabled
+        var menuItems = [];
+
+        if(typeof this.w.config.chart.toolbar.tools.download === 'object') {
+            if(this.w.config.chart.toolbar.tools.download[0] === true) {
+                menuItems.push({name:'exportSVG',title:this.localeValues.exportToSVG});
+            }
+            if(this.w.config.chart.toolbar.tools.download[1] === true) {
+                menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
+            }
+            if((this.w.config.chart.toolbar.tools.download[2] === true) &&
+               (this.w.globals.allSeriesHasEqualX === true)) {
+                menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
+           }
+        } else {
+            menuItems.push({name:'exportSVG',title:this.localeValues.exportToSVG});
+            menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
+            if(this.w.globals.allSeriesHasEqualX === true) {
+                menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
+            }
         }
 
         for (var i = 0; i < menuItems.length; i++) {
