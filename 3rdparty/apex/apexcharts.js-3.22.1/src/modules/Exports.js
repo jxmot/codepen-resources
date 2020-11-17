@@ -136,7 +136,10 @@ class Exports {
   }
 
   exportToSVG() {
-    this.triggerDownload(this.svgUrl(), null, '.svg')
+// jxmot - can optionally use filename from config
+    this.triggerDownload(this.svgUrl(), 
+                         (this.w.config.chart.toolbar.export.svg.filename === undefined ? null : this.w.config.chart.toolbar.export.svg.filename), 
+                         '.svg');
   }
 
   exportToPng() {
@@ -144,6 +147,10 @@ class Exports {
       if (blob) {
         navigator.msSaveOrOpenBlob(blob, this.w.globals.chartID + '.png')
       } else {
+// jxmot - can optionally use filename from config
+        this.triggerDownload(imgURI, 
+                               (this.w.config.chart.toolbar.export.png.filename === undefined ? null : this.w.config.chart.toolbar.export.png.filename),
+                               '.png');
         this.triggerDownload(imgURI, null, '.png')
       }
     })

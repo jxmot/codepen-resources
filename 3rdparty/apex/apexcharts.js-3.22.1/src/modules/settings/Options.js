@@ -351,6 +351,13 @@ export default class Options {
               dateFormatter(timestamp) {
                 return new Date(timestamp).toDateString()
               }
+            },
+// jxmot - can optionally use filename from config
+            svg: {
+              filename: undefined
+            },
+            png: {
+              filename: undefined
             }
           },
           autoSelected: 'zoom' // accepts -> zoom, pan, selection
