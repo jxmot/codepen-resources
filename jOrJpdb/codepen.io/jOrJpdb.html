@@ -1,0 +1,51 @@
+<!--
+  The version of Apex Charts used below has been modified
+  for this particular CodePen.
+
+  This CodePen demonstrates the modified code that allows
+  for custom export filenames. This includes CSV, PNG, and 
+  SVG. The PNG & SVG export code was modified, the CSV 
+  export code is OK the way it is.
+
+  The required external files can be found here:
+    http://github.com/jxmot/codepen-resources
+-->
+<script src="https://jxmot.github.io/codepen-resources/jOrJpdb/js/apexcharts.js"></script>
+
+<p>
+  This demo utilizes a <strong>modified</strong> version of Apex Charts v3.22.1,
+  where the PNG and SVG file names are set in the chart options object.
+  <br>
+  <br>
+  The modified source can be found <a href="https://github.com/jxmot/codepen-resources">here</a>.
+</p>
+<p>
+  You can change the file name by enter text in the box below and then clicking
+  the button. To see the file name use the export menu and choose one of the 
+  types. When the file is ready to download you should see the name you have 
+  chosen.
+</p>
+<input id="intext" type="text"/>
+<button type="button" onclick="changeFilename()">Change File Name</button> 
+<br>
+<p>
+  Uncheck/check boxes to disable or enable file download types.
+</p>
+<div>
+  <label  style="cursor:pointer;">
+      <input checked style="cursor:pointer;" type="checkbox" value="0" name="select_dl"/>
+      <span>SVG</span>
+  </label>
+  <label  style="cursor:pointer;">
+      <input checked style="cursor:pointer;" type="checkbox" value="1" name="select_dl"/>
+      <span>PNG</span>
+  </label>
+  <label  style="cursor:pointer;">
+      <input checked style="cursor:pointer;" type="checkbox" value="2" name="select_dl"/>
+      <span>CSV</span>
+  </label>
+  <button type="button" onclick="changeDownloads()">Change Downloads</button>
+</div>
+<br><br>
+<div id="chart"></div>
+

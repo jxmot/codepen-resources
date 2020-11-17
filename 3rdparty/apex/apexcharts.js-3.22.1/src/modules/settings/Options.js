@@ -340,7 +340,9 @@ export default class Options {
             zoomout: true,
             pan: true,
             reset: true,
-            customIcons: []
+            customIcons: [],
+// jxmot - menu title
+            menutitle: undefined
           },
           export: {
             csv: {
