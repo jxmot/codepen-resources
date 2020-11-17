@@ -110,12 +110,27 @@ export default class Toolbar {
     appendZoomControl('reset', this.elZoomReset, icoReset)
 
     if (this.t.download) {
-      toolbarControls.push({
-        el: this.elMenuIcon,
-        icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
-        title: this.localeValues.menu,
-        class: 'apexcharts-menu-icon'
-      })
+// jxmot - determine if the hamburger menu will be empty, if
+// it will be then don't add it.
+      if(typeof this.w.config.chart.toolbar.tools.download === 'object') {
+        if( (!this.w.config.chart.toolbar.tools.download[0]) &&
+            (!this.w.config.chart.toolbar.tools.download[1]) && 
+            (this.w.globals.allSeriesHasEqualX && this.w.config.chart.toolbar.tools.download[2]) ) {
+              toolbarControls.push({
+                el: this.elMenuIcon,
+                icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
+                title: this.localeValues.menu,
+                class: 'apexcharts-menu-icon'
+              });
+        }
+      } else {
+        toolbarControls.push({
+          el: this.elMenuIcon,
+          icon: typeof this.t.download === 'string' ? this.t.download : icoMenu,
+          title: this.localeValues.menu,
+          class: 'apexcharts-menu-icon'
+        });
+      }
     }
 
     for (let i = 0; i < this.elCustomIcons.length; i++) {
@@ -165,25 +180,29 @@ export default class Toolbar {
       class: 'apexcharts-menu'
     })
 
-    const menuItems = [
-      {
-        name: 'exportSVG',
-        title: this.localeValues.exportToSVG
-      },
-      {
-        name: 'exportPNG',
-        title: this.localeValues.exportToPNG
-      },
-      {
-        name: 'exportCSV',
-        title: this.localeValues.exportToCSV
-      }
-    ]
+// jxmot - handle the possibility that individual
+// download types (SVG,PNG,CSV) can be enabled/disabled
+    var menuItems = [];
 
-    if (!this.w.globals.allSeriesHasEqualX) {
-      // if it is a multi series, and all series have variable x values, export CSV won't work
-      menuItems.splice(2, 1)
+    if(typeof this.w.config.chart.toolbar.tools.download === 'object') {
+        if(this.w.config.chart.toolbar.tools.download[0] === true) {
+            menuItems.push({name:'exportSVG',title:this.localeValues.exportToSVG});
+        }
+        if(this.w.config.chart.toolbar.tools.download[1] === true) {
+            menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
+        }
+        if((this.w.config.chart.toolbar.tools.download[2] === true) &&
+           (this.w.globals.allSeriesHasEqualX === true)) {
+            menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
+       }
+    } else {
+        menuItems.push({name:'exportSVG',title:this.localeValues.exportToSVG});
+        menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
+        if(this.w.globals.allSeriesHasEqualX === true) {
+            menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
+        }
     }
+
     for (let i = 0; i < menuItems.length; i++) {
       this.elMenuItems.push(document.createElement('div'))
       this.elMenuItems[i].innerHTML = menuItems[i].title
