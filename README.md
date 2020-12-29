@@ -16,3 +16,5 @@ The CodePen demo is [here](<https://codepen.io/jxmot/pen/jOrJpdb>). And the modi
 
 My modifications to `apexcharts.js` can be found by searching for `jxmot`.
 
+---
+<img src="http://webexperiment.info/extcounter/mdcount.php?id=codepen-resources">
