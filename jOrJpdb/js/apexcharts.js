@@ -14795,12 +14795,14 @@
                 menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
             }
             if((this.w.config.chart.toolbar.tools.download[2] === true) &&
+               // if it is a multi series, and all series have variable x values, export CSV won't work
                (this.w.globals.allSeriesHasEqualX === true)) {
                 menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
            }
         } else {
             menuItems.push({name:'exportSVG',title:this.localeValues.exportToSVG});
             menuItems.push({name:'exportPNG',title:this.localeValues.exportToPNG});
+            // if it is a multi series, and all series have variable x values, export CSV won't work
             if(this.w.globals.allSeriesHasEqualX === true) {
                 menuItems.push({name:'exportCSV',title:this.localeValues.exportToCSV});
             }
